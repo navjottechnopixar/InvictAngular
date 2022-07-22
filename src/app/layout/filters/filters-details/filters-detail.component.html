@@ -1,0 +1,113 @@
+<div class="row mt-4">
+    <div class="col-md-6 edit-search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchField" (keyup.enter)="onSearch()">
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" (click)="onSearch()">
+             <i class="fa fa-search"></i>
+           </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="edit-right-btns text-right d-flex">
+            <a class="filter" role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1" id="filterBy" *ngIf="enableEnterprise || enableEnterpriseGroup || enableStartDate || enableEndDate">
+        Filter <i class="fa fa-filter"></i>
+      </a>
+     <a class="filter" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true" aria-controls="collapse-2" *ngIf="enableSortBy" #sortBy>
+        Sort by <i class="fa fa-sort" aria-hidden="true"></i>
+      </a>
+            <a class="filter-add-btn" routerLink="add-edit" *ngIf="permissionCreate == 'CREATE' && IsPermissions"  >Add New</a>
+            <a class="filter-add-btn" routerLink="add-edit" *ngIf="permissionCreate != 'CREATE' && !IsPermissions" >Add New</a>
+            <a class="filter-add-btn ml-3" routerLink="bulk" *ngIf="enableBulkUpload">Bulk Upload</a>
+        </div>
+    </div>
+</div>
+<div id="collapse-1" class="collapse" data-parent="#accordion" aria-labelledby="heading-1">
+    <div class="card-body p-0">
+        <div class="col-sm-12 table_filter">
+            <form [formGroup]="filterForm" (ngSubmit)="onSubmit('date')">
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-4 input_boxes" [ngStyle]="{'display': enableEnterpriseGroup ? 'block' : 'none' } ">
+                        <label>Enterprise Group Name</label>
+                        <select class="form-control" formControlName="enterprise_group" (change)="getEnterPrise()">
+                        <option disabled value='' selected>Enterprise Group</option>
+                        <option *ngFor="let group of enterPriseGroupList" [ngValue]="group.item_id">
+                          {{group?.item_text}}
+                        </option>
+                        </select>
+                    </div>
+                    <!-- {{filterFrm.controls.enterprise_group | json}} -->
+                    <div class="col-sm-12 col-md-4 input_boxes" [ngStyle]="{'display': enableEnterprise && filterFrm.enterprise_group.value ? 'block' : 'none' } ">
+                        <label> Enterprise Name</label>
+                        <select class="form-control" formControlName="enterprise">
+                      <option disabled value='' selected>Enterprise Name</option>
+                      <option *ngFor="let enterprise of enterPriseList" [ngValue]="enterprise.item_id">
+                        {{enterprise?.item_text}}
+                      </option>
+                    </select>
+                    </div>
+
+                    <div class="col-sm-12 col-md-4 input_boxes" [ngStyle]="{'display': enableStartDate ? 'block' : 'none' } ">
+                        <label>Date</label>
+                        <div class='input-group date position-relative'>
+                            <input type="text" placeholder="Date" id="datepicker" class="form-control" formControlName="start_date" [disabled]="true" readonly/> 
+                             <!-- <i class="fa fa-calendar" aria-hidden="true"></i> -->
+                            <!-- <input
+                    type="text" class="form-control"
+                    placeholder="dd-mmm-yyyy"
+                    name="start_date"
+                    formControlName="start_date"                                   
+                    id="" 
+                    bsDatepicker
+                    readonly
+                    autocomplete="off"
+                    [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"> -->
+                            <!-- <input type='date' class="form-control" formControlName="start_date" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span> -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-12 col-md-4 input_boxes" [ngStyle]="{'display': enableEndDate ? 'block' : 'none' } ">
+            <label>end Date</label>
+            <div class='input-group date' id='end_date'>
+              <input type='date' class="form-control" formControlName="end_date" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>  -->
+                </div>
+                <div class="info-per-btn">
+                    <button type="submit" class="save-btn" style="width: 120px;">{{'Filter'}}</button>
+                    <a class="cancel-btn" (click)="cancelForm()">Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="collapse-2" class="collapse" data-parent="#accordion1" aria-labelledby="heading-2">
+    <div class="card-body p-0">
+        <form [formGroup]="filterForm" (ngSubmit)="onSubmit('sort')">
+            <div class="row">
+                <div class="col-md-8">
+                </div>
+                <div class="col-sm-12 col-md-4 table_filter input_boxes">
+                    <label>Sort By</label>
+                    <select class="form-control" formControlName="sort_by">
+            <option disabled value='' selected>Sort By</option>
+            <option value="name">Name</option>
+            <option value="date">Date</option>
+          </select>
+                </div>
+            </div>
+            <div class="info-per-btn">
+                <button type="submit" class="save-btn" style="width: 120px;">{{'Filter'}}</button>
+                <a class="cancel-btn" (click)="cancelForm()">Reset</a>
+            </div>
+        </form>
+    </div>
+</div>

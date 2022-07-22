@@ -1,0 +1,55 @@
+<div class="app-page-title">
+    <div class="user-header">
+        <h2 class="page-heading">Plans</h2>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="edit-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search here">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a class="filter-add-btn" routerLink="add-edit"><img src="assets/images/plues.png" style="width: 14px;"> Add</a>
+            </div>
+        </div>
+    </div>
+    <div class="user-list-table">
+        <table class="table">
+            <thead class="" style="background-color: #2f4858; color:#fff;">
+                <tr>
+                    <th scope="col">Plan Name</th>
+                    <th scope="col">Plan Cost</th>
+                    <th scope="col">Sites Limit</th>
+                    <th scope="col">User Limit</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of planList" >
+                    <td>{{ item.planName }}</td>
+                    <td>{{ item.planAmount }}</td>
+                    <td>{{ item.sitesLimit }}</td>
+                    <td>{{ item.userLimit }}</td>
+                    <td>
+                        <a class="edit-btn"><i class="fa fa-pencil" aria-hidden="true" (click)="editPlan(item)"></i></a>
+                        <span>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch{{item.planId}}" [checked]="item.planStatus === 1 ? true : false" (click)="changePlanStatus(item?.planId, $event)">
+                                <label class="custom-control-label" for="customSwitch{{item.planId}}"></label>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+                <tr *ngIf="!planList.length">
+                    <td colspan="5" class="text-center">No Records Found </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

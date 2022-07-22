@@ -1,0 +1,57 @@
+<div class="app-page-title">
+  <div class="user-header">
+    <h2 class="page-heading">User Detail</h2>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="edit-search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search here">
+            <div class="input-group-append">
+              <button class="btn btn-secondary" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+      </div>
+    </div>
+  </div>
+  <div class="address-info-form">
+    <div class="master-table-row">
+      <img src="assets/images/user.png">
+      <div class="name-master">
+        <h4 class="mb-0">{{ userDetail.firstName }} {{ userDetail.lastName }}</h4>
+        <h6 class="mb-0">Role: {{ userDetail.mainRole }}</h6>
+        <p>{{ userDetail.email }}</p>
+      </div>
+    </div>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Sites</label>
+          <input type="email" class="form-control" id="inputEmail4" placeholder="Sites" value="0" readonly>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Assigned</label>
+          <input type="email" class="form-control" id="inputEmail4" placeholder="Assigned" value="0" readonly>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Initiated</label>
+          <input type="email" class="form-control" id="inputEmail4" placeholder="Initiated" value="0" readonly>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Completed</label>
+          <input type="email" class="form-control" id="inputEmail4" placeholder="Completed" value="0" readonly>
+        </div>
+      </div>
+    </form>
+    <div class="info-per-btn">
+      <button type="submit" class="next action-button cancel-btn"  (click)="GoBack()">Back</button>
+  </div>
+  </div>
+</div>

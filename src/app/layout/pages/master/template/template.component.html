@@ -1,0 +1,80 @@
+<div class="app-page-title">
+    <div class="user-header">
+    
+      <h2 class="page-heading">Templates</h2>
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="edit-search">
+               <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search here">
+                  <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              <!--    <a class="filter" role="button" data-toggle="collapse" href="" >
+               <i class="fa fa-filter"></i> Filter 
+              </a>
+               <a class="filter collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+               <i class="fa fa-sort" aria-hidden="true"></i> Date 
+              </a> -->
+             
+          </div> 
+
+            </div>
+
+            <div class="col-md-6">
+            <!--    <a class="filter-add-btn" href="">+ Add User</a> -->
+            <a type="button" class="btn filter-add-btn text-white" data-toggle="modal" data-target="#exampleModalCenter1" (click)="addTemplate()">+ Add Template</a>
+            </div>
+
+  </div>
+  </div>
+
+
+  <div class="user-list-table">
+      <table class="table">
+        <thead class="" style="background-color: #2f4858; color:#fff;">
+          <tr>
+            <th scope="col">Template Name</th>
+            <th scope="col">Last Modified</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let temp of tempList">
+            <td>
+              <div class="master-table-row">
+                  <div class="name-master ml-0">
+                      {{temp.templateName}}
+                  </div>
+               </div>
+            </td>
+            <td>{{temp.createDate}}</td>
+            <td>
+              <!-- <a href="edit-action.html" class="edit-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a> -->
+              <div class="dropdown">
+               <button class="btn" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+               </button>
+               <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                 <button class="dropdown-item" type="button"><i class="fa fa-pencil pr-2" aria-hidden="true"></i>
+                   Edit Template</button>
+                 <hr class="my-2 mx-2">
+                 <button class="dropdown-item" type="button"><i class="fa fa-eye pr-2" aria-hidden="true"></i>
+                   Manage Access </button>
+                 <hr class="my-2">
+                 <button class="dropdown-item" type="button"><i class="fa fa-trash pr-2" aria-hidden="true"></i>
+                   Delete</button>
+               </div>
+             </div>
+             </td>
+             
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+
+</div>

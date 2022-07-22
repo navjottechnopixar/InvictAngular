@@ -1,0 +1,231 @@
+<div class="app-page-title">
+    <div class="user-header">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="edit-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search here">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+
+    <div class="profile">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center profile">
+                    <div class="profile_img mr-3">
+                        <img src="assets/images/user.png" alt="user">
+                    </div>
+                    <div class="desc">
+                        <h4 class="title mb-0"><strong>John</strong></h4>
+                        <p class="mb-0">Template Description</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-6 d-flex align-items-end justify-content-end">
+                <div class="text-right">
+                <a href="#">Score Settings</a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="question mt-5">
+        <div class="heading d-flex align-items-center justify-content-between p-3">
+            <h4 class="mb-0">Template</h4>
+            <h4 class="mb-0">Type of response</h4>
+        </div>
+
+
+
+        <div>
+            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: this.tb }"></ng-container>
+        </div>
+
+
+        <ng-template #recursiveListTmpl let-list="list">
+            <div id="main">
+                <!-- sub sub section if any -->
+                <div class="accordion" style="margin-bottom: 10px;" id="faq" *ngFor="let item of list; let i = index;">
+                    <div class="add_part" [attr.Id]="item.Name + item.Id" style="display: none;">
+                        <ul>
+                            <li class="d-flex flex-column"
+                                [ngClass]="{'color: ': (item.Type == 'Question') ? 'red' : 'green'}"
+                                (click)="addSubQuestion(item.Id, item.Level)"><i class="fa fa-plus"></i>Question</li>
+                            <li class="d-flex flex-column" (click)="addSubSection(item.Id, item.Level)"><i
+                                    class="fa fa-tasks"></i>Section</li>
+                            <li class="d-flex flex-column" (click)="deleteKey(item.Id, item.Level)"><i
+                                    class="fa fa-trash" aria-hidden="true"></i>Delete</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <!-- (click)="showSideOptions(item.Name + item.Id)" -->
+                        <div class="card-header" id="faqhead1" *ngIf="item.Type == 'Question' || item.Type == 'Section'"
+                            (click)="showSideOptions(item.Name + item.Id)">
+                            <a href="#" class="btn btn-header-link" data-toggle="collapse"
+                                [attr.data-target]="'#collapse' + item.Id" aria-expanded="true"
+                                aria-controls="faq1"></a>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" [(ngModel)]="item.Name">
+
+                            <div class="right-card-icon" *ngIf="item.Type == 'Question'">
+                                <i class="fa fa-caret-down" aria-hidden="true" (click)="myFunction()"></i>
+
+                                <div class="accor-drop" id="myDropdown1">
+                                    <ul>
+                                        <li *ngFor="let mcq of mcqList.getMcqmasterViewModel">
+                                            <div>
+                                            <span *ngFor="let q of mcq.getMcqmasterOptionViewModel;let last = last;">
+                                                <span style="margin-right: 5px;" class="mcq-option-style">{{q.optionName}}</span>
+                                                <button type="button" class="btn btn-demo" data-toggle="modal"
+                                                    (click)="myFunction();getMcqValue(mcq.getMcqmasterOptionViewModel)" data-target="#myModal2" *ngIf="last">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </button>
+                                            </span>
+                                                
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- <div *ngIf="item.Type == 'Question'">
+                                    <div *ngFor="let option of mcqList.getMcqmasterViewModel"> 
+                                        <div *ngFor="let o of option.getMcqmasterOptionViewModel">
+                                            {{o.option}}
+                                        </div>
+                                    </div> -->
+                            <!-- <select name="mcq" id="mcq" class="selectOptions">
+                                        <div *ngFor="let option of mcqList.getMcqmasterViewModel"> 
+                                            <div *ngFor="let o of option.getMcqmasterOptionViewModel">
+                                             <option [value]="o.optionName">{{o.optionName}}</option>
+                                            </div>
+                                        </div>
+                                    </select> -->
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                    <!-- (click)="showSideOptions(item.Name + item.Id)" -->
+                    <!-- <div class="card card-subheader text-left" id="headingTwo" *ngIf="item.Type == 'Question' || item.Type == 'Section'">
+                            <a href="#" class="btn btn-header-link" data-toggle="collapse" [attr.data-target]="'#collapse' + item.Name"
+                            aria-expanded="false" aria-controls="collapseTwo"></a>
+                            <input class="form-control" [(ngModel)]="item.Name">
+                        </div> -->
+
+
+                    <div id="collapse{{item.Id}}" class="collapse" aria-labelledby="headingTwo"
+                        data-parent="#accordionExample">
+                        <div *ngIf="item.Type == 'Question'">
+                            <div class="card-body card-body-new">
+                                <!-- <div class="my-3 option">
+                                    <ul>
+                                        <li *ngFor="let o of item.Desc">
+                                            <button type="button" class="btn btn-outline-dark">{{o.Name}}</button>
+                                        </li>
+                                    </ul>
+                                </div> -->
+                                <div class="card-checks">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Required</label>
+                                    </div>
+                                    <!-- <div class="form-check">
+                                        <label class="form-check-label" for="exampleCheck2">Score : <span
+                                                style="color: #ed8210;">05</span></label>
+                                    </div> -->
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck3">
+                                        <label class="form-check-label" for="exampleCheck3">Report</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck4">
+                                        <label class="form-check-label" for="exampleCheck4">Screen</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div style="margin-left:20px;" *ngIf="item.Desc.length > 0">
+                            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Desc }">
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end -->
+        </ng-template>
+
+        <div style="margin: 45px 0px;">
+            <button style="margin-right: 20px;" class="add-btns" (click)="addMainQuestion()">Add Question</button>
+            <button (click)="addMainSection()" class="add-btns">Add Section</button>
+        </div>
+
+        <div style="margin:100px 0px ;text-align: center;">
+            <button style="margin-right: 20px;" (click)="goNext()">Next</button>
+            <button style="margin-right: 20px;" (click)="goBack()">Cancel</button>
+        </div>
+
+
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal right fade accordion-popup" id="myModal2" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <!--   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                    <h4 class="modal-title" id="myModalLabel2">Multiple Choice responses</h4>
+                    <p> e.g. Yes, No, Y/A
+                    </p>
+
+                    <h6>Response</h6>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="input-group mb-3" *ngFor="let val of updateMCQList">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Option Name" aria-label="Username" [(ngModel)]="val.optionName"
+                                aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Score" aria-label="Username"  [(ngModel)]="val.optionScore"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </form>
+
+
+
+                    <!-- <button class="add-response-btn"> + Add Response</button> -->
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary saveAndApplyBtn">Save and Apply</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+
+
+</div>

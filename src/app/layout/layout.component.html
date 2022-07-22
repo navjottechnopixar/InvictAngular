@@ -1,0 +1,19 @@
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" [ngClass]="show ? 'closed-sidebar' : ''">
+    <!-- Top-nav -->
+    <app-top-nav (collapseSideNav)="sideNavDisplay($event)"></app-top-nav>
+    <div class="app-main">
+
+        <!-- Sidebar -->
+        <app-side-nav [showSideNav]="show"></app-side-nav>
+
+        <!-- Layout -->
+        <div class="app-main__outer">
+            <div class="app-main__inner">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

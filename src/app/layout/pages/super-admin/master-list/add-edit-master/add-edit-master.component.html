@@ -1,0 +1,212 @@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="tab-content">
+            <div class="tab-pane active show" id="tabs-1" role="tabpanel">
+                <section class="address-info-form">
+                    <form [formGroup]="personalForm" id="msform">
+                        <!-- progressbar -->
+                        <ul id="progressbar">
+                            <li [ngClass]="step>=1 ? 'active ' : 'inactive'">Personal Details</li>
+                            <li [ngClass]="step>=2 ? 'active' : 'inactive'">Social Profiles</li>
+                        </ul>
+                        <!-- fieldsets -->
+                        <fieldset *ngIf="step == 1">
+                            <h2 class="fs-title">Step 1</h2>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+                                    <div *ngIf="personal_step && personal.firstName.errors">
+                                        <div class="form-error" *ngIf="personal.firstName.errors?.required">First Name is required.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+                                    <div *ngIf="personal_step && personal.lastName.errors">
+                                        <div class="form-error" *ngIf="personal.lastName.errors?.required">Last Name is required.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" placeholder="Email" formControlName="email">
+                                    <div *ngIf="personal_step && personal.email.errors">
+                                        <div class="form-error" *ngIf="personal.email.errors?.required">Email is required.</div>
+                                        <!-- <div class="form-error" *ngIf="personal.email.errors?.email">Email address is invalid.</div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" placeholder="Phone" formControlName="phone" (keypress)="keyPressNumbersDecimal($event)">
+                                    <div *ngIf="personal_step && personal.phone.errors">
+                                        <div class="form-error" *ngIf="personal.phone.errors?.required">Phone is required</div>
+                                        <!-- <div class="form-error" *ngIf="personal.phone.errors?.pattern || personal.phone.errors?.maxlength || personal.phone.errors?.minlength">
+                                            Phone must be at least 10 characters long.
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select class="form-control" formControlName="planId" (change)="setMaxSiteandUser(personal.planId.value)">
+                                        <option disabled value="" selected>Select Plan</option>
+                                        <option *ngFor="let plan of plans" [ngValue]="plan.planId"> {{plan?.planName}}
+                                        </option>
+                                      </select>
+                                    <div *ngIf="personal_step && personal.planId.errors" class="log-error">
+                                        <div  class="form-error" *ngIf="personal.planId.errors.required">{{'Plan is required.'}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" placeholder="Number of Sites" formControlName="sitesLimit" (keypress)="keyPressNumbersDecimal($event)">
+                                    <!-- <div *ngIf="personal_step && personal.sitesLimit.errors">
+                                        <div class="form-error" *ngIf="personal.sitesLimit.errors?.required">Number Of
+                                            Sites is required</div>
+                                    </div> -->
+                                    <div class="form-error" *ngIf="personal.sitesLimit.value > sitesLimit">Maximum sites allowed is {{this.sitesLimit}}</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" placeholder="Number of Users" formControlName="usersLimit" (keypress)="keyPressNumbersDecimal($event)" autocomplete="off">
+                                    <!-- <div *ngIf="personal_step && personal.usersLimit.errors">
+                                        <div class="form-error" *ngIf="personal.usersLimit.errors?.required">Number Of
+                                            Users is required</div>
+                                    </div> -->
+                                    <div class="form-error" *ngIf="personal.usersLimit.value > userLimit">Maximum user allowed is {{this.userLimit}}</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select class="form-control" formControlName="themeId">
+                                        <option value="">Select Theme</option>
+                                        <option *ngFor="let theme of themes" [ngValue]="theme.themeId"> {{theme?.themeName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="personal_step && personal.themeId.errors" class="log-error">
+                                        <div class="form-error" *ngIf="personal.themeId.errors.required">{{'Theme is required.'}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row" *ngIf="!masterDetails">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <input [type]="fieldTextType1 ? 'text' : 'password'" class="form-control" placeholder="Password" formControlName="password" autocomplete="off">
+                                        <!-- Password Eye -->
+                                        <div class="input-group-append">
+                                            <span role="button" class="input-group-text" (click)="toggleFieldTextType1()">
+                                                <i class="fa" [ngClass]="{ 'fa-eye-slash': !fieldTextType1, 'fa-eye': fieldTextType1 }"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="personal_step && personal.password.errors">
+                                        <div class="form-error" *ngIf="personal.password.errors?.required">{{ 'Password is required' }}</div>
+                                        <div *ngIf="personal.password?.errors?.minlength" class="form-error">
+                                            {{'Password length must be between 6-20 characters.'}}
+                                        </div>
+
+                                        <div *ngIf="personal.password?.errors?.maxlength" class="form-error">
+                                            {{'Password length must be between 6-20 characters.'}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <input [type]="fieldTextType2 ? 'text' : 'password'" class="form-control" placeholder="Confirm Password" formControlName="confirm_password" autocomplete="on">
+                                        <!-- Password Eye -->
+                                        <div class="input-group-append">
+                                            <span role="button" class="input-group-text" (click)="toggleFieldTextType2()">
+                                                <i class="fa" [ngClass]="{ 'fa-eye-slash': !fieldTextType2, 'fa-eye': fieldTextType2 }"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="personal_step && personal.confirm_password.errors">
+                                        <div class="form-error" *ngIf="personal.confirm_password.errors?.required"> Confirm Password is required</div>
+                                    </div>
+                                    <div *ngIf="personal_step">
+                                        <div class="form-error" *ngIf="passwordNotMatched">Password must match.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input (click)="cancel()" type="button" name="cancel" class="next app-primary-btn" value="Cancel" />
+                            <input (click)="next()" type="button" name="next" class="next action-button" value="Next" />
+                        </fieldset>
+                    </form>
+                    <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+                        <fieldset *ngIf="step == 2 || step == 3 ">  
+                            <div class="welcome-audit">
+                                <h3>Welcome to <span>AudiT</span>, {{ personalForm.value.firstName }}</h3>
+                                <div class="form-group main-goal-sec">
+                                    <h3>Upload company logo</h3>
+                                    <div class="imges-upload mb-0">
+                                        <div class="imgUp m-auto">
+                                          <div class="imagePreview"></div>
+                                          <label class="btn btn-primary">
+                                            Upload<input type="file" class="uploadFile img" value="Upload Photo" name="imagePath"
+                                              style="width: 0px;height: 0px;overflow: file;" id="imagePath" (change)="onFileSelected($event)"> 
+                                          </label>
+                                        </div>
+                                      </div>
+                                </div>
+                                <div class="form-group main-goal-sec">
+                                    <h3>What is your company name ?</h3>
+                                    <input type="email" class="form-control" id="exampleFormControlInput1"
+                                        placeholder="Company Name" formControlName="companyName">
+                                    <div *ngIf="isSubmited && adf.companyName.errors">
+                                        <div class="form-error" *ngIf="adf.companyName.errors?.required">Company Name is required</div>
+                                    </div>
+                                </div>
+                                <div class="main-goal-sec">
+                                    <h3>What is your main goal? (Choose one option for now, you can explore others later)</h3>
+                                    <div class="row">
+                                        <div class="col-md-6" *ngFor="let item of goals; let i = index;">
+                                                <div class="radiobtn">
+                                                    <input type="radio" id="mainGoal{{item.mainGoalId}}" [checked]="item.selected" (change)='goalRadioChecked(item.mainGoalId, i)'>
+                                                    <label for="mainGoal{{item.mainGoalId}}"><b>{{item.goalName}}</b><br> {{item.goalDescription}}</label>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="radiobtn">
+                                                <input type="radio" id="mainGoal0" [checked]="otherGoalCheck" (change)='goalOtherRadioChecked()'>
+                                                <label for="mainGoal0"><b>Other</b><br><input id="mainGoalInput" style="display: none;"  type="text" (keyup)="onTypeOtherGoal()"  formControlName="mainGoalDescription" ></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="isSubmited && adf.mainGoalId.errors">
+                                        <div class="form-error" *ngIf="adf.mainGoalId.errors?.required">Please select goal.</div>
+                                    </div>
+                                </div>
+                                <div class="your-buisness">
+                                    <h3>Which industry best describes your business?</h3>
+                                    <p>We'll use this to recommend industry templates in order to help you get started.</p>
+                                    <!-- <form> -->
+                                        <div class="row">
+                                            <div class="col-md-4" *ngFor="let item of companyTypes; let j = index">
+                                                <div class="radiobtn">
+                                                    <input type="radio" id="companyType{{item.companyTypeId}}" [checked]="item.selected" (change)='companyRadioChecked(item.companyTypeId, j)'>
+                                                    <label for="companyType{{item.companyTypeId}}"><b>{{ item.companyType1 }}</b><br></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="radiobtn">
+                                                    <input type="radio" id="companyType0" [checked]="otherCompanyCheck" (change)='companyTypeRadioChecked()'>
+                                                    <label for="companyType0"><b>Other</b><br> <input id="companyTypeInput" style="display: none;" type="text" (keyup)="onTypeOtherCompany()"   formControlName="companyTypeDescription" ></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="isSubmited && adf.companyTypeId.errors">
+                                            <div class="form-error" *ngIf="adf.companyTypeId.errors?.required">Please select business.</div>
+                                        </div>
+                                    <!-- </form> -->
+                                </div>
+                                <div class="info-per-btn">
+                                    <a class="save-btn" (click)="previous()">Previous</a>
+                                    <button style="margin-left: 10px;" class="save-btn" type="submit">Finish</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

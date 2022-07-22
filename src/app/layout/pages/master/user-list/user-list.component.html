@@ -1,0 +1,215 @@
+<div class="app-page-title">
+    <div class="user-header">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="edit-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search here">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a type="button" class="btn filter-add-btn text-white" data-toggle="modal"
+                    data-target="#exampleModalCenter" (click)="addUserPopup()">
+                    <img src="assets/images/plues.png" style="width: 14px;"> Add User
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-list-table">
+        <table class="table">
+            <thead class="" style="background-color: #2f4858; color:#fff;">
+                <tr>
+                    <th scope="col">User Details</th>
+                    <th scope="col">Sites</th>
+                    <th scope="col">Assigned</th>
+                    <th scope="col">Initiated</th>
+                    <th scope="col">Completed</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of userList">
+                    <td>
+                        <div class="master-table-row">
+                            <!-- <img src="assets/images/user.png">  -->
+                            <div class="name-master">
+                                <h4 class="mb-0">{{ item.firstName }} {{ item.lastName }}</h4>
+                                <h6 class="mb-0">Role: {{ item.mainRole }}</h6>
+                                <p>{{ item.email }}</p>
+                            </div>
+                     </div>
+                    </td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>
+                        <a class="user-details" (click)="goToDetail(item)">Detail</a>
+                        <a class="edit-btn"><i class="fa fa-pencil" aria-hidden="true" (click)="openEditPopup(item)" data-toggle="modal"
+                            data-target="#exampleModalCenter"></i></a>
+                        <span>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch{{item.userId}}"
+                                    [checked]="item.status === 1 ? true : false"
+                                    (click)="changeUserStatus(item?.userDetailId,  $event)">
+                                <label class="custom-control-label" for="customSwitch{{item.userId}}"></label>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+                <tr *ngIf="!userList.length">
+                    <td colspan="4" class="text-center">No Records Found </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade add-user-model" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" *ngIf="isPopupShow">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2>{{ (userListId) ? 'Edit' : 'Add' }} User</h2>
+                    <form [formGroup]="userForm" id="msform" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" placeholder="First Name"
+                                    formControlName="firstName">
+                                <div *ngIf="submitted && userFc.firstName.errors">
+                                    <div class="form-error" *ngIf="userFc.firstName.errors?.required">First Name is
+                                        required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" placeholder="Last Name"
+                                    formControlName="lastName">
+                                <div *ngIf="submitted && userFc.lastName.errors">
+                                    <div class="form-error" *ngIf="userFc.lastName.errors?.required">Last Name is
+                                        required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" placeholder="Email" formControlName="email">
+                                <div *ngIf="submitted && userFc.email.errors">
+                                    <div class="form-error" *ngIf="userFc.email.errors?.required">Email is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="number" class="form-control" placeholder="Phone" formControlName="phone"
+                                    (keypress)="keyPressNumbersDecimal($event)">
+                                <div *ngIf="submitted && userFc.phone.errors">
+                                    <div class="form-error" *ngIf="userFc.phone.errors?.required">Phone is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" *ngIf="!userListId">
+                            <div class="form-group col-md-6">
+
+                                <div class="input-group">
+                                    <input [type]="fieldTextType1 ? 'text' : 'password'" ype="password" class="form-control" placeholder="Password"
+                                    formControlName="password">
+                                    <!-- Password Eye -->
+                                    <div class="input-group-append">
+                                        <span role="button" class="input-group-text" (click)="toggleFieldTextType1()">
+                                            <i class="fa" [ngClass]="{ 'fa-eye-slash': !fieldTextType1, 'fa-eye': fieldTextType1 }"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div *ngIf="submitted && userFc.password.errors">
+                                    <div class="form-error" *ngIf="userFc.password.errors?.required">{{ 'Password is required' }}</div>
+                                    <div *ngIf="userFc.password?.errors?.minlength" class="form-error">
+                                        {{'Password length must be between 6-20 characters.'}}
+                                    </div>
+
+                                    <div *ngIf="userFc.password?.errors?.maxlength" class="form-error">
+                                        {{'Password length must be between 6-20 characters.'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <input [type]="fieldTextType2 ? 'text' : 'password'" class="form-control" placeholder="Confirm Password" formControlName="confirm_password">
+                                    <!-- Password Eye -->
+                                    <div class="input-group-append">
+                                        <span role="button" class="input-group-text" (click)="toggleFieldTextType2()">
+                                            <i class="fa" [ngClass]="{ 'fa-eye-slash': !fieldTextType2, 'fa-eye': fieldTextType2 }"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div *ngIf="submitted && userFc.confirm_password.errors">
+                                    <div class="form-error" *ngIf="userFc.confirm_password.errors?.required"> Confirm
+                                        Password is required</div>
+                                </div>
+                                <div class="form-error" *ngIf="passwordNotMatched">Password must match.</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <select id="" class="form-control" formControlName="siteId">
+                                    <option value="">Select Site</option>
+                                    <option *ngFor="let item of sitesList" [value]="item.siteId">{{item.siteName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && userFc.siteId.errors">
+                                    <div class="form-error" *ngIf="userFc.siteId.errors?.required">Site is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <select id="" class="form-control" formControlName="mainRole">
+                                    <option value="">Select main role</option>
+                                    <option *ngFor="let item of mainRoles" [value]="item">{{item}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && userFc.mainRole.errors">
+                                    <div class="form-error" *ngIf="userFc.mainRole.errors?.required">Main Role is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Select Role'"
+                                [settings]="rolesDropSetting"
+                                [data]="roleData"
+                                [(ngModel)]="selectedRoles"
+                                (onSelect)="onRoleSelect($event)"
+                                (onSelectAll)="onSelectAll($event)"
+                                (onDeSelectAll)="onDeSelectRolesAll($event)"
+                                (onDeSelect)="onDeSelectRolesSingle($event)"
+                                formControlName="roles"
+                                >
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div *ngIf="submitted && userFc.roles.errors">
+                                <div class="form-error" *ngIf="userFc.roles.errors?.required">Role is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-per-btn">
+                            <button type="submit" class="btn btn-primary save-btn">Save</button>
+                            <button type="button" class="btn btn-secondary save-btn"
+                                data-dismiss="modal" (click)="cancelPopup()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

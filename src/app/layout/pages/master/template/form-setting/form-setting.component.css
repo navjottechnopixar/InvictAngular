@@ -1,0 +1,108 @@
+.form-setting .col-form-label {
+    color: #000;
+    font-size: 17px;
+    font-weight: 501;
+  }
+
+  .user-header h5 {
+    font-size: 17px;
+    font-weight: 501;
+  }
+
+  button.form-btn{
+    padding: 5px 45px;
+    background-color: #2f4858;
+    color: #fff;
+    border-radius: 25px;
+    margin-right: 5px;
+    
+
+
+  }
+.form-btn-white{
+    padding: 5px 35px;
+    border: 1px solid #2f4858;
+    color: #2f4858;
+    border-radius: 25px;
+    margin-left: 5px;
+ 
+}
+  button.form-btn:hover{
+    color: #fff!important;
+  }
+
+  .form-setting .form-data {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 17px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #000;
+  }
+
+  .form-setting .form-data input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+
+  .form-setting .checkmark {
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 20px;
+  }
+  
+
+  .form-setting .form-data:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+
+  .form-setting .form-data input:checked ~ .checkmark {
+    background-color: #00a925;
+  }
+  
+
+  .form-setting .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+ 
+  .form-setting .form-data input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  
+  .form-setting .form-data .checkmark::after {
+    left: 7px;
+    top: 4px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+      border-top-width: medium;
+      border-right-width: medium;
+      border-bottom-width: medium;
+      border-left-width: medium;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    font-weight: normal;
+  }
+.shadow-input{
+    box-shadow: 0px 0px 12px rgb(110 110 110 / 20%);
+}

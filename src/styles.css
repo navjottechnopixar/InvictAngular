@@ -1,0 +1,74 @@
+/* You can add global styles to this file, and also import other style files */
+.app-primary-btn {
+    background-color: #fff;
+    border: 1px solid #f18404 !important;
+    width: 100px;
+    font-weight: bold;
+    color: #f18404;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+body{
+    font-family: 'roboto' !important;
+}
+.imgUp {
+    margin-bottom: 15px;
+    max-width: 100%;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+
+.imgUp label, .imgUp label:hover {
+    background-color: #a9adb0;
+    border: 1px solid #a9adb0;
+    margin: 0px;
+}
+
+.imgUp label, .imgUp label {
+    margin: 0px;
+}
+.imgUp input.uploadFile.img {
+    border: 0px;
+}
+
+.imgUp label, .imgUp label:hover {
+    background-color: #a9adb0;
+    border: 1px solid #a9adb0;
+    margin: 0px;
+}
+.imagePreview {
+    width: 100%;
+    height: 340px;
+    background-position: center center;
+    background: url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+    background-color: #fff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    box-shadow: 0px -3px 6px 2px rgb(0 0 0 / 20%);
+}
+
+.user-list-table .custom-switch .custom-control-label::after {
+    top: calc(0.16rem + 2px);
+    left: calc(-2.25rem + 1px);
+    width: calc(1rem - 2px);
+    height: calc(1rem - 1px);
+    background-color: grey;
+  }
+  .cancel-btn{
+    background-color: #fff;
+    color: #2e4857;
+    padding: 7px 60px;
+    box-sizing: border-box;
+    font-weight: 600;
+    border-radius: 31px;
+    font-size: 19px;
+    display: inline-block;
+    border: 1px solid #2e4857;
+    margin-right: 10px;
+
+}
+

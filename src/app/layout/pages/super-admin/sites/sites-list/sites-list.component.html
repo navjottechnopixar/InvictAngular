@@ -1,0 +1,45 @@
+<div class="app-page-title">
+    <div class="user-header">
+        <h2 class="page-heading">Sites List</h2>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="edit-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search here">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a class="filter-add-btn" routerLink="add-edit"><img src="assets/images/plues.png" style="width: 14px;"> Add</a>
+            </div>
+        </div>
+    </div>
+    <div class="user-list-table">
+        <table class="table">
+            <thead class="" style="background-color: #2f4858; color:#fff;">
+                <tr>
+                    <th scope="col">Site Name</th>
+                    <th scope="col">Members</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of sitesList">
+                    <td>{{ item.siteName }}</td>
+                    <td>{{ item.members }}</td>
+                    <td>
+                        <a class="edit-btn" type="button" (click)="editSite(item)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr *ngIf="!sitesList.length">
+                    <td colspan="3" class="text-center">No Records Found </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

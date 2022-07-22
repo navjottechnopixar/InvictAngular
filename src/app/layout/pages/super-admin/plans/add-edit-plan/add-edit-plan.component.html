@@ -1,0 +1,48 @@
+<div class="app-page-title">
+    <h2>{{ this.planDetails ? 'Edit' : 'Add' }} Plan</h2>
+    <section class="address-info-form">
+        <form [formGroup]="planForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" placeholder="Plan Name" formControlName="planName">
+                    <div *ngIf="isSubmited && fc.planName.errors">
+                        <div class="form-error" *ngIf="fc.planName.errors?.required">Plan Name is required.</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                    <div *ngIf="isSubmited && fc.description.errors">
+                        <div class="form-error" *ngIf="fc.description.errors?.required">Description is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" placeholder="Plan Cost" formControlName="planAmount" (keypress)="keyPressNumbersDecimal($event)">
+                    <div *ngIf="isSubmited && fc.planAmount.errors">
+                        <div class="form-error" *ngIf="fc.planAmount.errors?.required">Plan Cost is required.</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" placeholder="Number of Site" formControlName="sitesLimit" (keypress)="keyPressNumbersDecimal($event)">
+                    <div *ngIf="isSubmited && fc.sitesLimit.errors">
+                        <div class="form-error" *ngIf="fc.sitesLimit.errors?.required">Number of Site is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" placeholder="Number of Users" formControlName="userLimit" (keypress)="keyPressNumbersDecimal($event)">
+                    <div *ngIf="isSubmited && fc.userLimit.errors">
+                        <div class="form-error" *ngIf="fc.userLimit.errors?.required">Number of Users is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-per-btn">
+                <button type="submit" class="next action-button cancel-btn"  (click)="GoBack()">Cancel</button>
+                <button type="submit" class="next action-button save-btn">Submit</button>
+            </div>
+        </form>
+    </section>
+</div>

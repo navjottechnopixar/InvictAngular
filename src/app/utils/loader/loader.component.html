@@ -1,0 +1,18 @@
+<!-- <div class="loading-screen-wrapper" *ngIf="showLoader">
+    <div class="loading-screen-icon">
+        <img  class="pulse uk-animation-fade" src="/assets/images/eclipse.svg">
+    </div>
+</div> -->
+
+<div id="global_loader" class="glb-ldr-prt" *ngIf="showLoader">
+    <div class="gl-ldr-ctr">
+        <div class="gl-loader " [ngStyle]="{'borderBottomColor': 'DF284D', borderLeftColor: 'DF284D'}"></div>
+    </div>
+</div>
+
+
+<!-- <div class="loading-screen-wrapper" *ngIf="showLoader">
+  <div class="loading-screen-icon">
+      <img *ngIf="this.loader_image" class="pulse uk-animation-fade" [src]="loader_image">
+  </div>
+</div> -->

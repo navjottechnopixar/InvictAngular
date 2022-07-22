@@ -1,0 +1,12 @@
+/* form icon eye */
+.form-control.ng-pristine.ng-invalid.ng-touched {
+    position: relative !important;
+  }
+  .input-group-text {
+    position: absolute !important;
+    top: 10px !important;
+    right: 0px !important;
+    background-color: transparent !important;
+    border-style: none !important;
+    z-index: 999;
+  }

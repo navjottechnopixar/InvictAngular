@@ -1,0 +1,17 @@
+.role-select{
+    color: #f18404 !important;
+    border: none;
+    width: 100%;
+    font-weight: 600;
+}
+.role-select:focus{
+    box-shadow: none;
+}
+.app-header-right .dropdown .dropdown-item {
+    padding: 0px 0px 0px 2px;
+  }
+  .app-header-right ul li a i {
+    color: #000;
+    font-size: 17px;
+    padding: 0px 10px;
+  }
